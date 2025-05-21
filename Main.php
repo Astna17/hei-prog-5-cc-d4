@@ -19,24 +19,14 @@ class UserRepository {
         return USERS[$id] ?? null;
     }
 
-    public function getUserById(string $id) {
+    public function getUserById(string $id): string {
         $log = new Logger();
-        try {
-            $user = $this->findUser($id);
-            if (!$user) {
-                throw new UserNotFoundException("User with $id not found !");
-            }
-
-            return $user;
-        } catch (UserNotFoundException $exception) {
-            $log->log($exception->getMessage());
-            
-            return null;
-        } catch (Exception $exception) {
-            $log->log($exception->getMessage());
-
-            return null;
+        $user = $this->findUser($id);
+        if (!$user) {
+            throw new UserNotFoundException("User with ID $id not found.");
         }
+
+        return $user;
     }
 }
 
